@@ -1,4 +1,4 @@
-package main
+package SliceString
 
 import (
 	"bufio"
@@ -16,7 +16,7 @@ func searchEditorText(editorText []string, searchText string) []string {
 	}
 	return results
 }
-func main() {
+func StartSearch() {
 	editorText := []string{
 		"перший рядок",
 		"другий рядок",
