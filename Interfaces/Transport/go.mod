@@ -1,3 +1,3 @@
-module TransportVersion1
+module TransportTypes
 
 go 1.21.0

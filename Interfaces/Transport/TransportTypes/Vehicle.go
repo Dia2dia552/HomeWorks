@@ -1,9 +1,13 @@
-package TransportVersion1
+package TransportTypes
 
 type Transport interface {
 	Stop()
 	Move()
 	ChangeSpeed(speed int)
+}
+type PassengerTransport interface {
+	PassengersIn()
+	PassengersOut()
 }
 
 func Moving() {
@@ -17,5 +21,18 @@ func Moving() {
 		vehicle.Move()
 		vehicle.ChangeSpeed(+10)
 		vehicle.Stop()
+	}
+}
+
+func Passengers() {
+	car := PassengerCar{"BMW"}
+	train := PassengerTrain{"Мілан"}
+	airplane := PassengerAirplane{"Boeing 777"}
+
+	vehicles := []PassengerTransport{car, train, airplane}
+
+	for _, vehicle := range vehicles {
+		vehicle.PassengersIn()
+		vehicle.PassengersOut()
 	}
 }

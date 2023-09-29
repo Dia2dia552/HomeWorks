@@ -1,16 +1,16 @@
-package TransportVersion2
+package TransportTypes
 
 import (
 	"fmt"
 )
 
-type Airplane struct {
+type PassengerAirplane struct {
 	Name string
 }
 
-func (a Airplane) PassengersIn() {
+func (a PassengerAirplane) PassengersIn() {
 	fmt.Printf("Пассажири сіли у літак %s\n", a.Name)
 }
-func (a Airplane) PassengersOut() {
+func (a PassengerAirplane) PassengersOut() {
 	fmt.Printf("Пассажири вийшли з літаку %s\n", a.Name)
 }

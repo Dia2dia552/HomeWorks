@@ -1,12 +1,9 @@
 package main
 
-import (
-	"TransportVersion1/TransportVersion1"
-	"TransportVersion1/TransportVersion2"
-)
+import "TransportTypes/TransportTypes"
 
 func main() {
-	TransportVersion1.Moving()
-	TransportVersion2.Passengers()
+	TransportTypes.Moving()
+	TransportTypes.Passengers()
 
 }
