@@ -6,8 +6,8 @@ type Transport interface {
 	ChangeSpeed(speed int)
 }
 type PassengerTransport interface {
-	PassengersIn()
-	PassengersOut()
+	AddPassengers()
+	RemovePassengers()
 }
 
 func Moving() {
@@ -25,14 +25,14 @@ func Moving() {
 }
 
 func Passengers() {
-	car := PassengerCar{"BMW"}
-	train := PassengerTrain{"Мілан"}
-	airplane := PassengerAirplane{"Boeing 777"}
+	car := PassengerCar{"BMW", 2}
+	train := PassengerTrain{"Мілан", 50}
+	airplane := PassengerAirplane{"Boeing 777", 100}
 
 	vehicles := []PassengerTransport{car, train, airplane}
 
 	for _, vehicle := range vehicles {
-		vehicle.PassengersIn()
-		vehicle.PassengersOut()
+		vehicle.AddPassengers()
+		vehicle.RemovePassengers()
 	}
 }
