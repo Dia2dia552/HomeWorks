@@ -17,6 +17,6 @@ func (a Airplane) Stop() {
 }
 
 func (a Airplane) ChangeSpeed(speed int) {
-	a.Speed = speed
+	a.Speed += speed
 	fmt.Printf("%s змінює швидкість на %d км/год\n", a.Name, a.Speed)
 }

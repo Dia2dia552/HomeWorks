@@ -3,9 +3,8 @@ package TransportVersion1
 import "fmt"
 
 type Car struct {
-	Name   string
-	Speed  int
-	Engine string
+	Name  string
+	Speed int
 }
 
 func (c Car) Move() {
@@ -16,7 +15,7 @@ func (c Car) Stop() {
 	fmt.Printf("%s зупиняється\n", c.Name)
 }
 
-func (c *Car) ChangeSpeed(speed int) {
-	c.Speed = speed
+func (c Car) ChangeSpeed(speed int) {
+	c.Speed += speed
 	fmt.Printf("%s змінює швидкість на %d км/год\n", c.Name, c.Speed)
 }

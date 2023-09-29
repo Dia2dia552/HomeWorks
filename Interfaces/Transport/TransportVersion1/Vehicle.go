@@ -7,15 +7,15 @@ type Transport interface {
 }
 
 func Moving() {
-	car := Car{Name: "Автомобіль", Speed: 60, Engine: "ДВС"}
+	car := Car{Name: "Автомобіль", Speed: 60}
 	train := Train{Name: "Потяг", Speed: 120}
 	airplane := Airplane{Name: "Літак", Speed: 800, Altitude: 10000}
 
-	vehicles := []Transport{&car, train, airplane}
+	vehicles := []Transport{car, train, airplane}
 
 	for _, vehicle := range vehicles {
 		vehicle.Move()
-		//vehicle.ChangeSpeed(vehicle.Speed + 10)
+		vehicle.ChangeSpeed(+10)
 		vehicle.Stop()
 	}
 }
