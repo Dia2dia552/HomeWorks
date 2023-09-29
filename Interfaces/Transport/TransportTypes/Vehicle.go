@@ -1,5 +1,7 @@
 package TransportTypes
 
+import "fmt"
+
 type Transport interface {
 	Stop()
 	Move()
@@ -34,5 +36,22 @@ func Passengers() {
 	for _, vehicle := range vehicles {
 		vehicle.AddPassengers()
 		vehicle.RemovePassengers()
+	}
+}
+
+func SeeTheRoute() {
+	car := Car{Name: "Автомобіль", Speed: 60}
+	train := Train{Name: "Потяг", Speed: 120}
+	airplane := Airplane{Name: "Літак", Speed: 800, Altitude: 10000}
+
+	route := NewRoute()
+	route.AddTransport(car)
+	route.AddTransport(train)
+	route.AddTransport(airplane)
+
+	fmt.Println("Список транспортних засобів на маршруті:")
+
+	for _, transport := range route.GetTransportList() {
+		fmt.Printf("Тип: %T\n", transport)
 	}
 }
