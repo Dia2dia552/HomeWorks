@@ -14,9 +14,9 @@ func (c PassengerCar) AddPassengers() {
 func (c PassengerCar) RemovePassengers() {
 	if c.Passengers > 0 {
 		c.Passengers--
-		fmt.Printf("Пассажири вийшли з авто %s\n", c.Name)
+		fmt.Printf("Пасажири вийшли з авто %s\n", c.Name)
 	} else {
-		fmt.Println("В машині нема більше пассажирів")
+		fmt.Println("В машині нема більше пасажирів")
 	}
 
 }
