@@ -6,14 +6,12 @@ import (
 	"time"
 )
 
-func Random() []int {
-	ch := make(chan []int)
+func Random(ch chan int) {
 	for i := 0; i < 6; i++ {
-		randomNums := rand.Perm(10)
-		time.Sleep(time.Second)
-		ch <- randomNums
+		randomNum := rand.Intn(100)
+		ch <- randomNum
 	}
-	return <-ch
+	close(ch)
 }
 
 func sum(s []int, c chan int) {
@@ -24,19 +22,30 @@ func sum(s []int, c chan int) {
 	c <- sum
 }
 
-func Average() int {
-	s := Random()
+func Average(ch chan int) int {
+	var s []int
+	for num := range ch {
+		s = append(s, num)
+	}
+
+	if len(s) == 0 {
+		return 0
+	}
+
 	c := make(chan int)
-	go sum(s[:], c)
+	go sum(s, c)
 	x := <-c
 	return x / len(s)
 }
+
 func ShowAverage() {
-	num := Average()
-	time.Sleep(100 * time.Millisecond)
-	go fmt.Println(num)
+	ch := make(chan int)
+	go Random(ch)
+	num := Average(ch)
+	fmt.Println(num)
 }
 
 func main() {
 	ShowAverage()
+	time.Sleep(100 * time.Millisecond)
 }
