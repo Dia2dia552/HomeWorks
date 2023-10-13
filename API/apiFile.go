@@ -8,7 +8,7 @@ import (
 type Task struct {
 	ID        string `json:"id"`
 	Item      string `json:"title"`
-	Completed bool   `json:"complited" `
+	Completed bool   `json:"completed" `
 	Date      string `json:"date"`
 }
 
