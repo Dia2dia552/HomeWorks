@@ -19,7 +19,16 @@ var tasks = []Task{
 }
 
 func getTasks(context *gin.Context) {
-	context.IndentedJSON(http.StatusOK, tasks)
+	date := context.DefaultQuery("date", "")
+
+	var filteredTasks []Task
+	for _, task := range tasks {
+		if date == "" || task.Date == date {
+			filteredTasks = append(filteredTasks, task)
+		}
+	}
+
+	context.IndentedJSON(http.StatusOK, filteredTasks)
 }
 
 func main() {
