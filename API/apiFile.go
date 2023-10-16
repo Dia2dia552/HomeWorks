@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"main/StudentsServer"
 	"net/http"
 )
 
@@ -34,6 +35,7 @@ func getTasks(context *gin.Context) {
 func main() {
 	router := gin.Default()
 	router.GET("/tasks", getTasks)
+	router.GET("/student/{id}", StudentsServer.GetStudentInfo)
 	err := router.Run("localhost:9090")
 	if err != nil {
 		return
