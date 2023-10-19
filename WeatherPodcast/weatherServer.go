@@ -3,8 +3,11 @@ package main
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"io"
+	"log"
 	"net/http"
+	"os"
 )
 
 func GetWeatherData(w http.ResponseWriter, r *http.Request) {
@@ -15,7 +18,7 @@ func GetWeatherData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	apiKey := "e5408c8173744f9c99694825231910"
+	apiKey, _ := os.LookupEnv("WEATHER_API_KEY")
 	apiUrl := "https://api.weatherapi.com/v1/current.json?key=" + apiKey + "&q=" + city
 
 	response, err := http.Get(apiUrl)
@@ -45,6 +48,12 @@ func GetWeatherData(w http.ResponseWriter, r *http.Request) {
 	err = json.NewEncoder(w).Encode(weatherData)
 	if err != nil {
 		return
+	}
+}
+
+func init() {
+	if err := godotenv.Load(); err != nil {
+		log.Print("No .env file found")
 	}
 }
 
