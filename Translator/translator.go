@@ -37,7 +37,10 @@ func main() {
 		}
 		response := TranslationResponse{TranslatedText: translatedText}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(response)
+		err = json.NewEncoder(w).Encode(response)
+		if err != nil {
+			return
+		}
 	})
 
 	err := http.ListenAndServe(":8080", nil)
@@ -54,7 +57,12 @@ func translateText(text, sourceLang, targetLang string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			return
+		}
+	}(resp.Body)
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
