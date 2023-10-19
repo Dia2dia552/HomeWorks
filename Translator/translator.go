@@ -3,8 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/joho/godotenv"
 	"io"
+	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -18,6 +21,11 @@ type TranslationResponse struct {
 	TranslatedText string `json:"translated_text"`
 }
 
+func init() {
+	if err := godotenv.Load(); err != nil {
+		log.Print("No .env file found")
+	}
+}
 func main() {
 	http.HandleFunc("/translate", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
@@ -50,7 +58,7 @@ func main() {
 }
 
 func translateText(text, sourceLang, targetLang string) (string, error) {
-	apiKey := "API_KEY"
+	apiKey, _ := os.LookupEnv("API_KEY")
 	url := fmt.Sprintf("https://translation.googleapis.com/language/translate/v2?key=%s", apiKey)
 	data := fmt.Sprintf(`{"q":"%s","source":"%s","target":"%s","format":"text"}`, text, sourceLang, targetLang)
 	resp, err := http.Post(url, "application/json", strings.NewReader(data))
