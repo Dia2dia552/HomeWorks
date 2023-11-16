@@ -30,5 +30,8 @@ func (uc *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 func (uc *UserController) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("User updated successfully"))
+	_, err := w.Write([]byte("User updated successfully"))
+	if err != nil {
+		return
+	}
 }
