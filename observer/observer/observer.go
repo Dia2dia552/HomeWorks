@@ -9,6 +9,10 @@ type Subject struct {
 	observers []Observer
 }
 
+type Player struct {
+	Name string
+}
+
 func (s *Subject) Register(o Observer) {
 	s.observers = append(s.observers, o)
 }
@@ -24,10 +28,6 @@ func (s *Subject) Notify(msg string) {
 	for _, observer := range s.observers {
 		observer.Update(msg)
 	}
-}
-
-type Player struct {
-	Name string
 }
 
 func (p *Player) Update(msg string) {
