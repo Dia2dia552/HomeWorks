@@ -14,6 +14,35 @@ type UserController struct {
 func (uc *UserController) SetDB(database *sql.DB) {
 	uc.db = database
 }
+func (uc *UserController) GetUser(w http.ResponseWriter, r *http.Request) {
+	user := models.User{ID: 1, Name: "John", Email: "john@example.com"}
+
+	w.Header().Set("Content-Type", "application/json")
+	err := json.NewEncoder(w).Encode(user)
+	if err != nil {
+		return
+	}
+}
+
+func (uc *UserController) CreateUser(w http.ResponseWriter, r *http.Request) {
+	var newUser models.User
+	_ = json.NewDecoder(r.Body).Decode(&newUser)
+	w.Header().Set("Content-Type", "application/json")
+	err := json.NewEncoder(w).Encode(newUser)
+	if err != nil {
+		return
+	}
+}
+
+func (uc *UserController) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	_, err := w.Write([]byte("User updated successfully"))
+	if err != nil {
+		return
+	}
+}
+
+var db *sql.DB
 
 func (uc *UserController) AddUsers(w http.ResponseWriter, r *http.Request) error {
 	var newUser models.User
@@ -57,4 +86,27 @@ func (uc *UserController) GetAllUsers(w http.ResponseWriter, r *http.Request) ([
 		users = append(users, user)
 	}
 	return users, nil
+}
+
+func (uc *UserController) GetAllUsersHandler(w http.ResponseWriter, r *http.Request) {
+	users, err := uc.GetAllUsers(w, r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(users)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func (uc *UserController) AddUsersHandler(w http.ResponseWriter, r *http.Request) {
+	err := uc.AddUsers(w, r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
