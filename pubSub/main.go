@@ -22,6 +22,15 @@ func main() {
 		}
 	}()
 
+	users, err := publisher.GetDataFromDB()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	for _, user := range users {
+		fmt.Printf("ID: %d, Name: %s, Email: %s\n", user.ID, user.Name, user.Email)
+	}
 	pubSub.StartMonitoring(dirPath, publisher)
 	select {}
 }
