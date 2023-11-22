@@ -16,11 +16,13 @@ type Shelf struct {
 	books map[string]Book
 }
 
+// LibraryManager визначає методи для управління книгами у бібліотеці (Принцип розділення інтерфейсів - ISP).
 type LibraryManager interface {
 	RetrieveBook(title string) Book
 	ReturnBook(book Book)
 }
 
+// Manager реалізує інтерфейс LibraryManager та управляє книгами у базі даних та на полиці (Принцип єдиної відповідальності - SRP).
 type Manager struct {
 	db    Database
 	shelf Shelf
@@ -29,6 +31,7 @@ type Client struct {
 	manager LibraryManager
 }
 
+// RetrieveBook отримує книгу від менеджера (або з бази даних, або з полиці) за назвою (Принцип єдиної відповідальності - SRP).
 func (m *Manager) RetrieveBook(title string) Book {
 	book, found := m.db.books[title]
 	if !found {
@@ -41,15 +44,18 @@ func (m *Manager) RetrieveBook(title string) Book {
 	return book
 }
 
+// ReturnBook повертає книгу на полицю, керовану менеджером (Принцип єдиної відповідальності - SRP).
 func (m *Manager) ReturnBook(book Book) {
 	m.shelf.books[book.Title] = book
 	fmt.Println("Книгу повернуто на полицю:", book.Title)
 }
 
+// BorrowBook бере книгу від менеджера через інтерфейс LibraryManager (Принцип інверсії залежностей - DIP).
 func (c *Client) BorrowBook(title string) Book {
 	return c.manager.RetrieveBook(title)
 }
 
+// ReturnBook повертає книгу менеджеру через інтерфейс LibraryManager (Принцип інверсії залежностей - DIP).
 func (c *Client) ReturnBook(book Book) {
 	c.manager.ReturnBook(book)
 }
