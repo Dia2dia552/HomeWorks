@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Dia2dia552/fruit-sorter/consumer"
-	"github.com/Dia2dia552/fruit-sorter/producer"
+	"sorter/consumer"
+	producer "sorter/produser"
 )
 
 func main() {
