@@ -16,7 +16,6 @@ type Shelf struct {
 	books map[string]Book
 }
 
-// LibraryManager визначає методи для управління книгами у бібліотеці (Принцип розділення інтерфейсів - ISP).
 type LibraryManager interface {
 	RetrieveBook(title string) Book
 	ReturnBook(book Book)
